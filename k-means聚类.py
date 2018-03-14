@@ -47,3 +47,19 @@ def density_plot(data, k):
 pic_output = 'C:/Users/Administrator/Desktop/big data/chapter5/demo/tmp/pd1_'
 for i in range(k):
     density_plot(data[r[u'聚类类别']==i], k).savefig(u'%s%s.png' %(pic_output, i))
+    
+#用TSNE进行数据降维并展示聚类结果
+from sklearn.manifold import TSNE
+
+tsne = TSNE()
+tsne.fit_transform(data_zs) #先拟合数据，再标准化
+tsne = pd.DataFrame(tsne.embedding_, index=data_zs.index)
+
+d = tsne[r[u'聚类类别'] == 0]
+plt.plot(d[0], d[1], 'r.')
+d = tsne[r[u'聚类类别'] == 1]
+plt.plot(d[0], d[1], 'go')
+d = tsne[r[u'聚类类别'] == 2]
+plt.plot(d[0], d[1], 'b*')
+plt.show()
+
