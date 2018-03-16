@@ -9,7 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf  # 自相关图,偏自相关图
 from statsmodels.tsa.stattools import adfuller as ADF #平稳性检测
-from statsmodels.sandbox.stats.diagnostic import acorr_ljungbox
+from statsmodels.sandbox.stats.diagnostic import acorr_ljungbox #白噪声检验
 from statsmodels.tsa.arima_model import ARIMA
 
 discfile = 'C:/Users/Administrator/Desktop/big data/chapter5/demo/data/arima_data.xls'
