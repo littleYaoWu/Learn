@@ -15,6 +15,7 @@ x = data.iloc[:, :3].as_matrix().astype(int)
 y = data.iloc[:, 3].as_matrix().astype(int)
 
 #导入keras出错，需修改keras.json，将其中的tensorflow改为theano
+#解决方案https://zhuanlan.zhihu.com/p/26402501
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation #activation是逐元素计算的激活函数，Dense分层
 
