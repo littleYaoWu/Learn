@@ -15,3 +15,24 @@ plt.title(u'一个例子', fontproperties = 'LiSu', fontsize = 20)
 plt.ylim(0, 2.2)
 plt.legend() #显示图例
 plt.show() #显示结果
+
+def bingtu():
+    labels='frogs','hogs','dogs','logs'
+    sizes=15,20,45,10
+    colors='yellowgreen','gold','lightskyblue','lightcoral'
+    explode=0,0.1,0,0
+    plt.pie(sizes,explode=explode,labels=labels,colors=colors,autopct='%1.1f%%',shadow=True,startangle=50)
+    plt.axis('equal')
+    plt.show()
+
+
+inputfile = 'BehaviorScore.xlsx'
+data = pd.read_excel(inputfile, index_col='user_id')
+def xiangxiantu():
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.figure()
+    x = data.boxplot() # 箱线
+    z = data.hist() # 直方图
+    plt.show()
+
+xiangxiantu()
