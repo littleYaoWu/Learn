@@ -31,3 +31,21 @@ print(movie_pd.loc[[1, 3, 8]])
 
 print(movie_pd['title'])
 print(movie_pd[['title', 'score']])
+# 按列筛选
+
+print(movie_pd.loc[5, 'actors'])
+print(movie_pd.loc[[1, 5, 8], ['title', 'actors']])
+# 按一行一列或多行多列同时筛选
+
+# 筛选电影类型是剧情的 title 和 score 两列
+print(movie_pd[movie_pd['category'] == '剧情'][['title', 'score']])
+
+# 筛选电影排名小于等于 5 且评分高于 9.0 的 title 一列
+print(movie_pd[(movie_pd['rank'] <=5) & (movie_pd['score'] > 9.0)][['title']])
+
+# 筛选电影发布日期大于 2010-01-01 或 评论数超过 50万 的所有列
+print(movie_pd[(movie_pd['release_date'] > '2010-01-01') | (movie_pd['vote_count'] > 500000)])
+
+print(movie_pd[movie_pd['url'].isnull()])  # 筛选空值
+print(movie_pd[movie_pd['regions'].notnull()]) # 筛选非空值
+print(movie_pd[movie_pd['score'].isin([8.0, 9.0, 9.5])])  # 筛选某个字段的值在给定列表中
