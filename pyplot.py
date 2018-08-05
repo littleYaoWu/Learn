@@ -35,4 +35,21 @@ def xiangxiantu():
     z = data.hist() # 直方图
     plt.show()
 
-xiangxiantu()
+    
+# 密度分布曲线
+def Density_distribution(x):
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    mu = np.mean(x)
+    sigma = np.std(x)  # 标准差δ
+    num_bins = 100  # 直方图柱子的数量
+    n, bins, patches = plt.hist(x, num_bins, normed=1, facecolor='blue', alpha=0.5)
+    # 直方图函数，x为x轴的值，normed=1表示为概率密度，即和为一，蓝方块，色深参数0.5.返回n个概率，直方块左边线的x值，及各个方块对象
+    y = mlab.normpdf(bins, mu, sigma)  # 拟合一条最佳正态分布曲线y
+    plt.plot(bins, y, 'r--')  # 绘制y的曲线
+    plt.xlabel(u'数值')  # 绘制x轴
+    plt.ylabel('Probability')
+    plt.title(u'一组数值的概率分布')
+    plt.subplots_adjust(left=0.15)  # 左边距
+    plt.show()
+
+  
