@@ -28,6 +28,7 @@ def bingtu():
 
 inputfile = 'BehaviorScore.xlsx'
 data = pd.read_excel(inputfile, index_col='user_id')
+# 简单箱线图
 def xiangxiantu():
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.figure()
@@ -35,6 +36,24 @@ def xiangxiantu():
     z = data.hist() # 直方图
     plt.show()
 
+
+# 箱线图-标出异常值
+def xiangxiantu(data):
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.figure(1, figsize=(13, 26))
+    p = data.boxplot(return_type='dict')
+    for i in range(0, 3):
+        x = p['fliers'][i].get_xdata()
+        y = p['fliers'][i].get_ydata()
+        y.sort()
+        for i in range(len(x)):
+            if i > 0:
+                plt.annotate(y[i], xy=(x[i], y[i]), xytext=(x[i] + 0.05 - 0.8 / (y[i] - y[i - 1]), y[i]))
+            else:
+                plt.annotate(y[i], xy=(x[i], y[i]), xytext=(x[i] + 0.08, y[i]))
+    plt.show()
+    
+    
     
 # 密度分布曲线
 def Density_distribution(x):
