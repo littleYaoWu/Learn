@@ -3,8 +3,8 @@
 import pandas as pd
 from scipy.interpolate import lagrange #导入拉格朗日插值函数
 
-inputfile = 'C:/Users/Administrator/Desktop/big data/chapter4/demo/data/catering_sale.xls'
-outputfile = 'C:/Users/Administrator/Desktop/big data/chapter4/demo/tmp/sales1.xls'
+inputfile = 'big data/chapter4/demo/data/catering_sale.xls'
+outputfile = 'big data/chapter4/demo/tmp/sales1.xls'
 
 data = pd.read_excel(inputfile)
 data[u'销量'][(data[u'销量'] < 400) | (data[u'销量'] > 5000)] = None #将异常值设置为空
