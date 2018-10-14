@@ -49,3 +49,8 @@ print(movie_pd[(movie_pd['release_date'] > '2010-01-01') | (movie_pd['vote_count
 print(movie_pd[movie_pd['url'].isnull()])  # 筛选空值
 print(movie_pd[movie_pd['regions'].notnull()]) # 筛选非空值
 print(movie_pd[movie_pd['score'].isin([8.0, 9.0, 9.5])])  # 筛选某个字段的值在给定列表中
+
+
+#数据框转化为列表
+all_data = np.array(all_data)  # np.ndarray()
+all_data = all_data.tolist()  # list
