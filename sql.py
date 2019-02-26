@@ -13,7 +13,9 @@ s = [
     ('qqq', '222')]
     
 for key,values in s:
-  idlist = np.array(tmp_pd['1'][(md_date['w'] == key)].astype('int')).tolist()
+  idlist = np.array(tmp_pd['1'][(tmp_pd['w'] == key)].astype('int')).tolist()
   select_(values, idlist)
-    
-    
+
+  
+  
+
