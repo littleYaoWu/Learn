@@ -1,4 +1,4 @@
-# 时间
+########## 时间
 from datetime import datetime, date, timedelta
 
 today = datetime.now().strftime('%Y-%m-%d')
@@ -14,3 +14,9 @@ tmp['timestamp'] = tmp['timestamp'].apply(lambda x:datetime.strptime(x,'%Y-%m-%d
 # 转为秒
 tmp['时间差'] = (tmp['time1'] - tmp['time2']).seconds
 
+
+
+
+
+
+########## 
