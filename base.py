@@ -45,6 +45,8 @@ print(movie_pd.loc[[1, 5, 8], ['title', 'actors']])
 
 # 按条件筛选列
 print(movie_pd[movie_pd['category'] == '剧情'][['title', 'score']])
+# 筛选包含某字符
+movie_pd[movie_pd['category'].str.contains('剧情')][['title', 'score']]
 # 多条件筛选列
 print(movie_pd[(movie_pd['rank'] <=5) & (movie_pd['score'] > 9.0)][['title']])
 # 多条件筛选列
@@ -66,7 +68,7 @@ df.fillna(method='pad')
 
 # 按某几列去重
 temp_pd = temp_pd.drop_duplicates(['c1','c2','c3'])
-
+temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates()
 
 # 删除列
 temp_pd = temp_pd.drop(['logtime','name'], axis=1)
@@ -81,3 +83,8 @@ df['A'] = "11111__" + df['B'].apply(str).str.cat(df['C'].apply(str), sep='-').co
 #数据框转化为列表
 all_data = np.array(all_data)  # np.ndarray()
 all_data = all_data.tolist()  # list
+# 按指定顺序列排
+cols = ['人', '名', '备注1', '备注2']
+df_th = df_th.loc[:, cols]
+
+
