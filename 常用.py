@@ -14,9 +14,26 @@ tmp['timestamp'] = tmp['timestamp'].apply(lambda x:datetime.strptime(x,'%Y-%m-%d
 # 转为秒
 tmp['时间差'] = (tmp['time1'] - tmp['time2']).seconds
 
+!pip install python-dateutil
+from dateutil.parser import *
+# parse()函数解析 字符串时间列incidentdatetime
+robbery["year"] = robbery.incidentdatetime.apply(lambda x: parse(x).year)
+robbery["month"] = robbery.incidentdatetime.apply(lambda x: parse(x).month)
+robbery["hour"] = robbery.incidentdatetime.apply(lambda x: parse(x).hour)
+robbery["month"] = robbery.incidentdatetime.apply(lambda x: parse(x).month)
+robbery["hour"] = robbery.incidentdatetime.apply(lambda x: parse(x).hour)
 
 
 
 
+robbery = robbery[~(robbery.year == 2019)]#删除year=2019记录
 
-########## 
+
+########## 聚合
+# 统计数量并排序
+robbery.groupby('street').size().sort_values(ascending=False).head(10)
+
+robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
+#DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
+
+
