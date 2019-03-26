@@ -79,7 +79,7 @@ df.fillna('missing')
 df.fillna(method='pad') # method='bfill'向后填充
 # 删除包含空值的所有行
 df.dropna(axis=0, how='any') # 'all' 所有的都为空的行
-
+df.dropna(subset=['列1', '列2'], inplace=True)
 
 ##############################数据替换
 # 用“value”替换其中的“to_replace”
