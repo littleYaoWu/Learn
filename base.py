@@ -51,6 +51,11 @@ print(movie_pd.loc[[1, 5, 8], ['title', 'actors']])
 print(movie_pd[movie_pd['category'] == '剧情'][['title', 'score']])
 # 筛选包含某字符
 movie_pd[movie_pd['category'].str.contains('剧情')][['title', 'score']]
+y = dt_test[dt_test['path'].str.contains('吧|管|wb')]
+# 不包含某些字符
+y = dt_test[dt_test['path'].str.contains('吧|管|wb')]
+ret = list(set(list(dt_test['path'])) ^ set(list(y['path']))) # 差集，排除包含的字段行
+result = dt_test[dt_test['path'].isin(ret)]
 # 多条件筛选列
 print(movie_pd[(movie_pd['rank'] <=5) & (movie_pd['score'] > 9.0)][['title']])
 # 多条件筛选列
