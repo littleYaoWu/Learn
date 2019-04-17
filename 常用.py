@@ -36,4 +36,5 @@ robbery.groupby('street').size().sort_values(ascending=False).head(10)
 robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
 #DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
 
-
+robbery.sort_values(by="x1",ascending= False)  
+#DataFrame.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
