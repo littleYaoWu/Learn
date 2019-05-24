@@ -11,7 +11,7 @@ print(type(movie_pd)) # 数据类型
 
 temp_dict = {
     'score': [8.9, 8.2, 9.3],
-    'catagory': ['悬疑', '动作', '爱情']
+    'catagory': ['悬疑', '动作', '科幻']
 }
 temp_pd = pd.DataFrame(temp_dict) # 创建一个数据框
 
@@ -32,7 +32,11 @@ df_th = df_th.loc[:, cols]
 print(temp_pd.values)
 # 重置索引
 temp_pd = temp_pd.reset_index(drop=True)
-
+# column 改为 index
+df.set_index('date', inplace=True) 
+# index 改为 column
+df['index'] = df.index
+df.reset_index(level=0, inplace=True) # （the first）index 改为 column
 
 ########################################## 数据的筛选
 movie_pd.loc[0]
