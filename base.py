@@ -25,6 +25,7 @@ temp_pd.index = ['movie_1', 'movie_2', 'movie_3']
 temp_pd.columns = ['movie_score', 'movie_category']
 # 只对第二列重命名为size
 temp_pd.rename(columns = {temp_pd.columns[2]:'size'}, inplace=True)
+temp_pd.rename(columns={'id': '条数'}, inplace=True)
 # 列按指定顺序列排
 cols = ['人', '名', '备注1', '备注2']
 df_th = df_th.loc[:, cols]
