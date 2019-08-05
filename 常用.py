@@ -13,6 +13,7 @@ tmp['timestamp'] = tmp['timestamp'].apply(lambda x:datetime.strptime(x,'%Y-%m-%d
 
 # 转为秒
 tmp['时间差'] = (tmp['time1'] - tmp['time2']).seconds
+tmp_pd['距今'] = (today - tmp_pd['last_intime']).dt.days
 
 today = datetime.date.today()
 tmp_pd['距今'] = today - tmp_pd['last_intime']
