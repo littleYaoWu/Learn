@@ -76,6 +76,9 @@ temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates()
 temp_pd["name"].unique()
 # 删除列
 temp_pd = temp_pd.drop(['logtime','name'], axis=1)
+robbery = robbery[~(robbery.year == 2019)]#删除year=2019记录
+
+
 #########################################空值
 # 筛选空值
 movie_pd[movie_pd['url'].isnull()]
@@ -112,6 +115,7 @@ all_data = all_data.tolist()  # list
 df.as_matrix()
 
 
+
 #########################数据计算
 # “height”列的所有值乘以2
 df["height"].apply(lambda height: 2 * height)
@@ -123,5 +127,60 @@ df.corr()
 df["size"].median()
 # 数值排序
 df.sort_values(ascending = False)
+
+###############################读写
+tmp = pd.read_csv("D:/桌面/aaaaa.csv",engine='python', encoding='utf_8_sig',sep=',')
+pp = pd.read_excel('D:/bbb/fffff.xlsx', sheet_name='Sheet3')
+pp.to_excel('D:/桌面/啊.xlsx', index=False) # 默认索引不输出
+
+##############################聚合
+# 按b1右连接
+tmp = pd.merge(b1, b2, on=['name', 'id'], how='left')  
+# 拼接
+result = pd.concat([df1, df4], axis=1, sort=False)  # 横向
+result = df1.append(df2)  #纵向
+result = df1.append([df2, df3])
+esult = pd.concat([df1, df4], ignore_index=True, sort=False)
+result = pd.concat([b1,b2,b3], keys=['x', 'y'])
+# 外连接 
+pd.merge(df1, df2, on='col1', how='outer', indicator='indicator_column')
+
+
+# 统计数量并排序
+robbery.groupby('street').size().sort_values(ascending=False).head(10)
+tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg'])  # 等同于 select ID,lg,sum(数量) from tp group by ID,lg
+tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg']).sort_values('数量', ascending=False)  # 降序
+
+robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
+#DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
+
+robbery.sort_values(by="x1",ascending= False)  
+#DataFrame.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
+
+
+
+######################################时间处理
+from datetime import datetime, date, timedelta
+
+today = datetime.now().strftime('%Y-%m-%d')
+yesterday = (date.today() + timedelta(days=-1)).strftime("%Y-%m-%d")
+
+time2 = datetime.now().strftime("%Y%m%d" + '00')
+time1 = (date.today() + timedelta(days=-1)).strftime("%Y%m%d" + '00')
+
+# 时间格式
+tmp['timestamp'] = tmp['timestamp'].astype('str')
+tmp['timestamp'] = tmp['timestamp'].apply(lambda x:datetime.strptime(x,'%Y-%m-%d %H:%M:%S').strftime('%H:%M'))
+
+# 转为秒
+tmp['时间差'] = (tmp['time1'] - tmp['time2']).seconds
+tmp_pd['距今'] = (today - tmp_pd['last_intime']).dt.days
+
+today = datetime.date.today()
+tmp_pd['距今'] = today - tmp_pd['last_intime']
+tmp_pd['距今'] = (tmp_pd['距今'] / np.timedelta64(1, 'D')).astype(int)
+
+
+
 
 
