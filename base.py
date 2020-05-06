@@ -181,6 +181,20 @@ tmp_pd['距今'] = today - tmp_pd['last_intime']
 tmp_pd['距今'] = (tmp_pd['距今'] / np.timedelta64(1, 'D')).astype(int)
 
 
+#转时间戳函数
+def time2stamp(cmnttime):   
+    cmnttime = datetime.strptime(cmnttime,'%Y-%m-%d %H:%M:%S')
+    stamp = int(datetime.timestamp(cmnttime)) * 1000
+    return stamp
 
+tmp['stamp'] = tmp['time'].astype(str).apply(time2stamp)
+
+# 时间戳转date
+def stamp2time(timeStamp):
+    timeArray = time.localtime(int(int(timeStamp)/1000))
+    otherStyleTime = time.strftime("%Y-%m-%d %H:%M", timeArray)
+    return otherStyleTime
+
+tmp['time'] = tmp['stamp'].apply(stamp2time)
 
 
