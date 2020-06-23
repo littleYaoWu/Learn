@@ -114,7 +114,15 @@ all_data = all_data.tolist()  # list
 # 将 DataFrame 转换为 NumPy 数组
 df.as_matrix()
 
-
+#数据框转字典
+>>> df
+   col1  col2
+0     1     3
+1     2     4
+>>> [df.to_dict(orient='index')]
+[{0: {'col1': 1, 'col2': 3}, 1: {'col1': 2, 'col2': 4}}]
+>>> df.to_dict(orient='records')
+[{'col1': 1, 'col2': 3}, {'col1': 2, 'col2': 4}]
 
 #########################数据计算
 # “height”列的所有值乘以2
