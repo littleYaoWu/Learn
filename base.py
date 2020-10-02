@@ -15,6 +15,9 @@ temp_dict = {
 }
 temp_pd = pd.DataFrame(temp_dict) # 创建一个数据框
 
+tz_counts = frame['tz'].value_counts() # 某列得摘要视图
+tz_counts[:10] # 打印前10得统计
+
 print(len(temp_pd)) # 数据的长度
 print(temp_pd.index) # 获取当前索引
 
@@ -204,5 +207,16 @@ def stamp2time(timeStamp):
     return otherStyleTime
 
 tmp['time'] = tmp['stamp'].apply(stamp2time)
+
+# json
+import json
+# json字符串转字典
+path = 'ccc/ccx.txt'
+records = [json.loads(line) for line in open(path)]
+records[0]['lm'] # 访问第0行，‘lm’key得内容
+
+
+
+
 
 
