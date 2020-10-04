@@ -14,6 +14,7 @@ temp_dict = {
     'catagory': ['悬疑', '动作', '科幻']
 }
 temp_pd = pd.DataFrame(temp_dict) # 创建一个数据框
+temp_pd = pd.DataFrame(temp_dict, columns=['catagory','score'], index=['one','two','three'])
 
 tz_counts = frame['tz'].value_counts() # 某列得摘要视图
 tz_counts[:10] # 打印前10得统计
@@ -35,7 +36,8 @@ df_th = df_th.loc[:, cols]
 
 print(temp_pd.values)
 # 重置索引
-temp_pd = temp_pd.reset_index(drop=True)
+temp_pd = temp_pd.reset_index(drop=True) 
+df1.reindex(columns=df2.columns, fill_value=0) # 重置行索引和df2一样，不存在的值用0填充
 # column 改为 index
 df.set_index('date', inplace=True) 
 # index 改为 column
@@ -46,14 +48,18 @@ df.reset_index(level=0, inplace=True) # （the first）index 改为 column
 movie_pd.loc[0]
 movie_pd.loc[range(10)]
 movie_pd.loc[[1, 3, 8]]
+movie_pd.ix[0]
+movie_pd[:10]
 # .loc(索引值)，查询第一行，前10行，2 4 9行的数据
 
 movie_pd['title']
 movie_pd[['title', 'score']]
+movie_pd.title
 # 按列筛选
 print(movie_pd.loc[5, 'actors'])
 print(movie_pd.loc[[1, 5, 8], ['title', 'actors']])
-
+movie_pd.ix[0,['title', 'actors']]
+movie_pd.ix[movie_pd.score > 5, :3]
 
 # 按条件筛选列
 print(movie_pd[movie_pd['category'] == '剧情'][['title', 'score']])
@@ -79,7 +85,10 @@ temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates()
 temp_pd["name"].unique()
 # 删除列
 temp_pd = temp_pd.drop(['logtime','name'], axis=1)
+del temp_pd['name']
 robbery = robbery[~(robbery.year == 2019)]#删除year=2019记录
+# 删除行
+temp_pd.drop([3,4]) # 删除2，3行
 
 
 #########################################空值
@@ -106,6 +115,12 @@ df.replace(['A','29.54'],['B',100])
 df['A'] = df['A'].str.replace('aaa', 'bbb')  # .str时不可以inplace = True直接写入原表，要重新赋值
 
 
+##############################赋值
+# 对某列赋值
+frame['debt'] = np.arange(5.)  # 赋值1-4得序列
+frame['debt'] = Series([2,4,1], index=[1,2,4])
+frame[frame < 5] = 0  # 对小于5的数赋值0
+
 #############################数据拼接
 df['A'] = "qq" + df['B'].apply(str).str.cat(df['C'].apply(str), sep='-').copy()
 
@@ -128,6 +143,8 @@ df.as_matrix()
 [{'col1': 1, 'col2': 3}, {'col1': 2, 'col2': 4}]
 
 #########################数据计算
+df1 + df2 # 返回对应行列索引得并集，若一个为空则返回NaN
+df1.add(df2, fill_value=0) # 实际上的相加，空值则补0   sub剑法\div除法\mul乘法
 # “height”列的所有值乘以2
 df["height"].apply(lambda height: 2 * height)
 # 取最小值的索引
@@ -136,9 +153,19 @@ df.idxmin()
 df.corr()
 # 计算中位数
 df["size"].median()
-# 数值排序
-df.sort_values(ascending = False)
 
+# 函数映射
+df.apply(lambda x: x.max() - x.min())  # 每列的极值的差
+df.apply(lambda x: x.max() - x.min(), axis=1) # 每行极差
+frame['e'].map(lambda x: '%.2f' % x) # 数值转浮点型
+frame.applymap(lambda x: '%.2f' % x)
+
+########################### 数值排序
+frame.sort_index()
+frame.sort_index(axis=1, ascending=False)  # 按列名索引倒序
+# 按列中的值排序
+frame.sort_index(by=['a','b'])
+df.sort_values(ascending = False)
 ###############################读写
 tmp = pd.read_csv("D:/桌面/aaaaa.csv",engine='python', encoding='utf_8_sig',sep=',')
 pp = pd.read_excel('D:/bbb/fffff.xlsx', sheet_name='Sheet3')
