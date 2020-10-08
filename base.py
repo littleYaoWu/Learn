@@ -1,8 +1,6 @@
 import pandas as pd
 
 ####################################### 数据描述
-movie_pd = pd.read_csv('douban_movie.csv', header = 0, sep = '\t')
-temp_pd = pd.read_excel('test.xlsx',index=None)
 print(movie_pd.head()) # 前 5 行数据
 # .tail(20) 表示显示后 20 行数据
 print (movie_pd.info()) # 输出表结构数据类型
@@ -74,13 +72,14 @@ result = dt_test[dt_test['path'].isin(ret)]
 print(movie_pd[(movie_pd['rank'] <=5) & (movie_pd['score'] > 9.0)][['title']])
 # 多条件筛选列
 print(movie_pd[(movie_pd['release_date'] > '2010-01-01') | (movie_pd['vote_count'] > 500000)])
-
+# 绝对值大于3的所有行
+data[(np.abs(data) > 3).any(1)]
 # 筛选某个字段的值在给定列表中
 movie_pd[movie_pd['score'].isin([8.0, 9.0, 9.5])]
 
 # 按某几列去重
 temp_pd = temp_pd.drop_duplicates(['c1','c2','c3'])
-temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates()
+temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates(take_last=True) #take_last保留最后一个
 # 取唯一值
 temp_pd["name"].unique()
 # 删除列
@@ -153,6 +152,10 @@ df.idxmin()
 df.corr()
 # 计算中位数
 df["size"].median()
+# 行求均值
+df.mean(axis=1, skipna=False)  # skipna=False 不排除缺失值，
+# 累计统计（每一行均为前几行的和）
+df.cumsum()
 
 # 函数映射
 df.apply(lambda x: x.max() - x.min())  # 每列的极值的差
@@ -170,20 +173,34 @@ df.sort_values(ascending = False)
 tmp = pd.read_csv("D:/桌面/aaaaa.csv",engine='python', encoding='utf_8_sig',sep=',')
 pp = pd.read_excel('D:/bbb/fffff.xlsx', sheet_name='Sheet3')
 pp.to_excel('D:/桌面/啊.xlsx', index=False) # 默认索引不输出
+movie_pd = pd.read_csv('douban_movie.csv', header = 0, sep = '\t')
+temp_pd = pd.read_excel('test.xlsx',index=None)
+# nrows=5 前五行，skiprows 忽略前多少行，skip_footer 忽略行从尾部算起，encoding 编码，chunksize 分块读取
+# 输出
+data.to_csv('dd.csv', sep='|', na_rep='NULL', index=False, cols=['a','s'].)
 
-##############################聚合
+##############################合并数据
 # 按b1右连接
-tmp = pd.merge(b1, b2, on=['name', 'id'], how='left')  
+tmp = pd.merge(b1, b2, on=['name', 'id'], how='left',suffixes=('_left','_right'))  # suffixes对重复的列尾部追加
+# 索引合并
+left1.join(right1, how='outer')
+left1.join([right1,right2], how='outer')
 # 拼接
 result = pd.concat([df1, df4], axis=1, sort=False)  # 横向
+result = pd.concat([df1, df4], axis=1, join='inner') #交集
 result = df1.append(df2)  #纵向
 result = df1.append([df2, df3])
 esult = pd.concat([df1, df4], ignore_index=True, sort=False)
 result = pd.concat([b1,b2,b3], keys=['x', 'y'])
 # 外连接 
 pd.merge(df1, df2, on='col1', how='outer', indicator='indicator_column')
+# 重叠数据合并（用df2补齐df1中缺失的部分）
+df1.combine_first(df2)
 
-
+# 
+df['data1'].groupby(df['key1']).mean()
+df.groupby(['key1','key2'], as_index=False)[['data2']].mean() # as_index=False 重置索引
+df.groupby(['key1','key2'])['data2'].agg(['mean','std']) # agg分别做以下的聚合操作
 # 统计数量并排序
 robbery.groupby('street').size().sort_values(ascending=False).head(10)
 tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg'])  # 等同于 select ID,lg,sum(数量) from tp group by ID,lg
@@ -191,12 +208,17 @@ tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg']).sort_val
 
 robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
 #DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
-
+df.stack() # 列转为行，得到的是series类型
 robbery.sort_values(by="x1",ascending= False)  
 #DataFrame.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
 
-
-
+# 分组统计
+age = [3,5,6,2,8,6]
+bins = [0,5,10]
+cats = pd.cut(age,bins) # (0,5],(5,10]对age分组  ,right=False 左闭右开
+pd.value_counts(cats)
+pd.cut(age,4,precision=2) # 按最大最小值均匀分4组，小数点后两位
+pd.qcut(data, 4) #按4分位数分
 ######################################时间处理
 from datetime import datetime, date, timedelta
 
