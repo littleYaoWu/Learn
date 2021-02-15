@@ -219,6 +219,13 @@ cats = pd.cut(age,bins) # (0,5],(5,10]对age分组  ,right=False 左闭右开
 pd.value_counts(cats)
 pd.cut(age,4,precision=2) # 按最大最小值均匀分4组，小数点后两位
 pd.qcut(data, 4) #按4分位数分
+
+# 统计非重复项
+df.apply(pd.Series.nunique)
+pt = pivot_table(df,
+                 values=['b'],
+                 index=['a'],
+                 aggfunc=lambda x: len(x.unique())
 ######################################时间处理
 from datetime import datetime, date, timedelta
 
