@@ -212,12 +212,14 @@ robbery.sort_values(by="x1",ascending= False)
 robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
 #DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
 df.stack() # 列转为行，得到的是series类型
-
+# 列转行
 df = df.set_index('列1')
 df = df.stack()
 df.index = df.index.rename('列2', level=1)
 df.name = '新列'
 df = df.reset_index()
+# 行转列
+df.pivot(index='lie1', columns='lie2', values='lie3').reset_index()
 
 # 分组统计
 age = [3,5,6,2,8,6]
