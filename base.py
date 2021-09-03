@@ -205,12 +205,19 @@ df.groupby(['key1','key2'])['data2'].agg(['mean','std']) # agg分别做以下的
 robbery.groupby('street').size().sort_values(ascending=False).head(10)
 tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg'])  # 等同于 select ID,lg,sum(数量) from tp group by ID,lg
 tp = tp.groupby(['ID', 'lg'])['数量'].sum().reset_index(['ID', 'lg']).sort_values('数量', ascending=False)  # 降序
+robbery.sort_values(by="x1",ascending= False)  
+#DataFrame.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
 
+# 行列转置
 robbery[robbery.year==2018].groupby(['month', 'hour']).size().unstack(0)
 #DataFrame.unstack(level=-1, fill_value=None) level索引，默认为-1（最后一级） fill_value缺失值填充
 df.stack() # 列转为行，得到的是series类型
-robbery.sort_values(by="x1",ascending= False)  
-#DataFrame.sort_values(by, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last')
+
+df = df.set_index('列1')
+df = df.stack()
+df.index = df.index.rename('列2', level=1)
+df.name = '新列'
+df = df.reset_index()
 
 # 分组统计
 age = [3,5,6,2,8,6]
