@@ -76,6 +76,10 @@ print(movie_pd[(movie_pd['release_date'] > '2010-01-01') | (movie_pd['vote_count
 data[(np.abs(data) > 3).any(1)]
 # 筛选某个字段的值在给定列表中
 movie_pd[movie_pd['score'].isin([8.0, 9.0, 9.5])]
+# 筛选含有nan的行
+df[df.isna().any(axis=1)]
+# 筛选不包含nan的行
+df[~df.isna().any(axis=1)]
 
 # 按某几列去重
 temp_pd = temp_pd.drop_duplicates(['c1','c2','c3'])
