@@ -81,6 +81,11 @@ df[df.isna().any(axis=1)]
 # 筛选不包含nan的行
 df[~df.isna().any(axis=1)]
 
+# 随机选取
+kick[kick['adasd'].isin(ret)].sample(frac=0.60) 
+# 分组排序取每组最大值的行
+kick[kick.groupby(["Acc"])['timediff'].rank(method="first",ascending=False)==1]
+
 # 按某几列去重
 temp_pd = temp_pd.drop_duplicates(['c1','c2','c3'])
 temp_pd = temp_pd[temp_pd['C1'].notnull()][['C1']].drop_duplicates(take_last=True) #take_last保留最后一个
