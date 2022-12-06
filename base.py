@@ -282,6 +282,10 @@ def stamp2time(timeStamp):
 
 tmp['time'] = tmp['stamp'].apply(stamp2time)
 
+# 取消自动填0
+(datetime.date.today() + datetime.timedelta(days=-1)).strftime("%Y-%-m-%-d")                 
+'2022-12-4'
+                 
 # json
 import json
 # json字符串转字典
