@@ -131,8 +131,17 @@ frame[frame < 5] = 0  # 对小于5的数赋值0
 
 #############################数据拼接
 df['A'] = "qq" + df['B'].apply(str).str.cat(df['C'].apply(str), sep='-').copy()
+# dataframe分列
+>>> df['A'], df['B'] = df['AB'].str.split('-', 1).str
+>>> df
+      AB  AB_split   A   B
+0  A1-B1  [A1, B1]  A1  B1
+1  A2-B2  [A2, B2]  A2  B2
 
-
+>>> df['AB'].str.split('-', 1).str[0]
+0    A1
+1    A2
+Name: AB, dtype: object
 
 #数据框转化为列表
 all_data = np.array(all_data)  # np.ndarray()
