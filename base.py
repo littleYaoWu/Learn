@@ -270,6 +270,7 @@ tmp['timestamp'] = tmp['timestamp'].apply(lambda x:datetime.strptime(x,'%Y-%m-%d
 tmp['时间差'] = (tmp['time1'] - tmp['time2']).seconds
 tmp_pd['距今'] = (today - tmp_pd['last_intime']).dt.days
 join_df['diff'] = (pd.to_datetime(join_df['intime']) - pd.to_datetime(join_df['InTime'])).dt.seconds
+join_df['diff'] = ((pd.to_datetime(join_df['LogTime']) - pd.to_datetime(join_df['login_time']))/ pd.Timedelta(1, 'S')).fillna(0).astype(int)
 
 today = datetime.date.today()
 tmp_pd['距今'] = today - tmp_pd['last_intime']
