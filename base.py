@@ -236,6 +236,7 @@ df = df.stack()
 df.index = df.index.rename('列2', level=1)
 df.name = '新列'
 df = df.reset_index()
+# https://blog.csdn.net/lemonbit/article/details/129980163
 # 行转列
 df.pivot(index='lie1', columns='lie2', values='lie3').reset_index()
 
